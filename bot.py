@@ -17,6 +17,7 @@ def help(message):
     bot.send_message(owner,'@'+str(message.from_user.username)+' кинул хелп')
 @bot.message_handler(content_types=["text"])
 def link(message):
+    bot.delete_message(message.chat.id, message.message_id)
     link=message.text
     if link.find('youtu')!=-1:
         try:
@@ -29,28 +30,36 @@ def link(message):
                 'preferredquality': '320',
                 }],
             }
+            bot.send_chat_action(message.chat.id, 'upload_document')
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 info=ydl.extract_info(link)
             title=info['title']
+            uploader=info['uploader']
             code=info['id']
             name=title.replace("/", "_")
-            punct = '[–-]+'
+            punct = '[—–-]+'
             lst = re.split(punct, title)
             os.system("youtube-dl "+"--write-thumbnail "+"--skip-download "+"--output "+code+" "+link) 
             audiofile = eyed3.load(name+'.mp3')
             try:
                 audiofile.tag.artist = lst[0]
-                audiofile.tag.title = lst[1]
-            except: audiofile.tag.title = title
+                songname=''
+                for i in lst[1:]:
+                    songname+=i
+                audiofile.tag.title = songname
+            except: 
+                audiofile.tag.artist = uploader
+                audiofile.tag.title = title
             audiofile.tag.images.set(3, open(code+'.webp','rb').read(), 'image/jpeg')
             audiofile.tag.save()
-            
+                
             k = open(name+'.mp3','r+b')
             photo = Image.open(code+'.webp')
             bot.send_chat_action(message.chat.id, 'upload_photo')
             bot.send_photo(message.chat.id, photo)
-            bot.send_chat_action(message.chat.id, 'upload_audio')
+            bot.send_chat_action(message.chat.id, 'upload_document')
             bot.send_audio(message.chat.id,k)
+            k.close()
             os.remove(name+'.mp3')
             os.remove(code+'.webp')
         except:
