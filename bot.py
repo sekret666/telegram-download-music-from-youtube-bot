@@ -9,11 +9,11 @@ from PIL import Image
 bot = telebot.TeleBot(token)
 @bot.message_handler(commands=["start"])
 def start(message):
-    bot.send_message(message.chat.id,'Этот бот конвертирует видео с ютуба в MP3 320kbps\nОтправь мне ссылку на видео, чтобы скачать песню...')
+    bot.send_message(message.chat.id,'Этот бот скачивает песню с ютуба в качестве 320kbps\nОтправь мне ссылку на видео, чтобы скачать песню...')
     bot.send_message(owner,'@'+str(message.from_user.username)+' кинул старт')
 @bot.message_handler(commands=["help"])
 def help(message):
-    bot.send_message(message.chat.id,'Этот бот конвертирует видео с ютуба в MP3 320kbps и высылает вам в виде аудио\n\nБота создал @bob_volskiy\nИсходный код: github.com/BobVolskiy/\n\nМои боты:\n@bvsticker_bot\n@bob_musica_bot')
+    bot.send_message(message.chat.id,'Этот бот скачивает песню с ютуба в качестве 320kbps и высылает вам в виде аудио\n\nБота создал @bob_volskiy\nИсходный код: github.com/BobVolskiy/\n\nМои боты:\n@BVSticker_bot\n@BVMusic_bot')
     bot.send_message(owner,'@'+str(message.from_user.username)+' кинул хелп')
 @bot.message_handler(content_types=["text"])
 def link(message):
