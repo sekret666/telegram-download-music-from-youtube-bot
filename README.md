@@ -11,3 +11,4 @@
 owner = xxxxxxxxx # int var of your telegram id
 token = "TOKEN" # Bot token https://t.me/BotFather
 ```
+"+title+".%(ext)s
