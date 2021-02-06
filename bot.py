@@ -6,7 +6,7 @@ import youtube_dl
 import re
 from PIL import Image
 
-bot = telebot.TeleBot(token)
+bot = telebot.TeleBot('1624907624:AAHe4LwnAC7sLbiyWQJq-5l6uq4BchytHe4')
 @bot.message_handler(commands=["start"])
 def start(message):
     bot.send_message(message.chat.id,'Этот бот скачивает песню с ютуба в качестве 320kbps\nОтправь мне ссылку на видео, чтобы скачать песню...')
